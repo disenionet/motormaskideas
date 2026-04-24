@@ -1,5 +1,20 @@
-import { createServerClient, type Cookie } from '@supabase/ssr'
+import { createServerClient } from '@supabase/ssr'
 import { NextResponse, type NextRequest } from 'next/server'
+
+// ✅ Tipo Cookie definido localmente (no depende de exportación de @supabase/ssr)
+type Cookie = {
+  name: string
+  value: string
+  options?: {
+    domain?: string
+    path?: string
+    secure?: boolean
+    httpOnly?: boolean
+    sameSite?: 'strict' | 'lax' | 'none'
+    maxAge?: number
+    expires?: Date
+  }
+}
 
 export async function middleware(request: NextRequest) {
   let response = NextResponse.next({ request: { headers: request.headers } })
@@ -22,11 +37,11 @@ export async function middleware(request: NextRequest) {
     }
   )
 
-  // ✅ ENFOQUE SEGURO: sin desestructuración anidada
+  // ✅ Enfoque seguro: sin desestructuración anidada
   const authResponse = await supabase.auth.getUser()
   const user = authResponse.data?.user
 
-  // Rutas protegidas
+  // Rutas protegidas: solo usuarios autenticados
   if (request.nextUrl.pathname.startsWith('/panel')) {
     if (!user) {
       const redirectUrl = new URL('/auth/login', request.url)
