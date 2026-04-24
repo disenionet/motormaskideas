@@ -39,3 +39,11 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# Development scripts (no production)
+insert-test-data.ts
+seed-vehicles.ts
+list-vehicles.ts
+test-client.ts
+*.test.ts
+*.spec.ts
