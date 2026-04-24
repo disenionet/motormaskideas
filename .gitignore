@@ -47,3 +47,4 @@ list-vehicles.ts
 test-client.ts
 *.test.ts
 *.spec.ts
+.env*.local

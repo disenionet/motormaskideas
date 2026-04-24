@@ -1,13 +1,9 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  // ✅ Desactivar verificación estricta de TypeScript en build
+  // ✅ Ignorar errores de TypeScript en build (para deploy urgente)
   typescript: {
     ignoreBuildErrors: true,
-  },
-  // ✅ Desactivar linting de ESLint en build (opcional, para evitar más errores)
-  eslint: {
-    ignoreDuringBuilds: true,
   },
   // Configuración de imágenes
   images: {
