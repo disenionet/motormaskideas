@@ -1,0 +1,72 @@
+generator client {
+  provider = "prisma-client-js"
+  engineType = "library"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = "file:./motormaskideas.db"
+}
+
+enum VehicleStatus {
+  PENDING
+  APPROVED
+  REJECTED
+  SOLD
+}
+
+enum FuelType {
+  DIESEL
+  GASOLINA
+  HIBRIDO
+  ELECTRICO
+  GLP
+}
+
+enum Transmission {
+  MANUAL
+  AUTOMATICO
+}
+
+enum EnvironmentalLabel {
+  SIN_ETIQUETA
+  B
+  C
+  ECO
+  CERO_EMISIONES
+}
+
+enum LocationOrigin {
+  ESPANA
+  ALEMANIA
+}
+
+model Vehicle {
+  id                  String             @id @default(cuid())
+  title               String
+  slug                String             @unique
+  brand               String
+  model               String
+  year                Int
+  price               Int
+  mileage             Int
+  fuelType            FuelType
+  transmission        Transmission
+  environmentalLabel  EnvironmentalLabel
+  location            String
+  origin              LocationOrigin
+  description         String?
+  features            Json               @default("[]")
+  images              Json               @default("[]")
+  
+  status              VehicleStatus      @default(PENDING)
+  publishedAt         DateTime?
+  
+  views               Int                @default(0)
+  contacts            Int                @default(0)
+  createdAt           DateTime           @default(now())
+  updatedAt           DateTime           @updatedAt
+
+  @@index([status, publishedAt])
+  @@index([brand, model])
+}
